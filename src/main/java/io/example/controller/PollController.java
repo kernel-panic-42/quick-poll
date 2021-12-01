@@ -58,9 +58,9 @@ public class PollController {
 		poll = pollRepository.save(poll);
 		HttpHeaders responseHeaders = new HttpHeaders();
 		URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest()
-													.path("/{id}")
-													.buildAndExpand(poll.getId())
-													.toUri();
+				.path("/{id}")
+				.buildAndExpand(poll.getId())
+				.toUri();
 		responseHeaders.setLocation(newPollUri);
 		return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
 	}

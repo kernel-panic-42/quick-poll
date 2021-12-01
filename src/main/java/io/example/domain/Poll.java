@@ -11,6 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Poll {
 
@@ -26,21 +31,5 @@ public class Poll {
 	@JoinColumn(name = "POLL_ID")
 	@OrderBy
 	private Set<Option> options;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Set<Option> getOptions() {
-		return options;
-	}
-
-	public void setOptions(Set<Option> options) {
-		this.options = options;
-	}
 
 }
