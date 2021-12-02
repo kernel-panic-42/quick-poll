@@ -1,5 +1,9 @@
 package io.example.dto.error;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +19,8 @@ public class ErrorDetail {
     private int status;
     private String detail;
     private long timeStamp;
+    private String path;
     private String developerMessage;
+    private Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
 
 }
