@@ -15,9 +15,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import io.example.dto.error.ErrorDetail;
 import io.example.dto.error.ValidationError;
+import io.example.exception.ResourceNotFoundException;
 
 @ControllerAdvice
 public class RestExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rnfe,
+            HttpServletRequest request) {
+        ErrorDetail errorDetail = new ErrorDetail();
+        errorDetail.setTimeStamp(new Date().getTime());
+        errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
+        errorDetail.setTitle("Resource not found");
+        errorDetail.setDetail(rnfe.getMessage());
+        errorDetail.setDeveloperMessage(rnfe.getClass().getName());
+        return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationError(MethodArgumentNotValidException manve, HttpServletRequest request) {
@@ -52,18 +65,5 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorDetail, null, HttpStatus.BAD_REQUEST);
 
     }
-
-    // @ExceptionHandler(ResourceNotFoundException.class)
-    // public ResponseEntity<?>
-    // handleResourceNotFoundException(ResourceNotFoundException rnfe,
-    // HttpServletRequest request) {
-    // ErrorDetail errorDetail = new ErrorDetail();
-    // errorDetail.setTimeStamp(new Date().getTime());
-    // errorDetail.setStatus(HttpStatus.NOT_FOUND.value());
-    // errorDetail.setTitle("Resource not found");
-    // errorDetail.setDetail(rnfe.getMessage());
-    // errorDetail.setDeveloperMessage(rnfe.getClass().getName());
-    // return new ResponseEntity<>(errorDetail, null, HttpStatus.NOT_FOUND);
-    // }
 
 }
